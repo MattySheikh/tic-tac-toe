@@ -1,12 +1,23 @@
-$cell-height: 52px;
-
-.ttt-row {
-	display: block;
+.board {
+	width: 50%;
+	height: 50%;
+	margin: 0 auto;
 }
 
-.ttt-cell {
-	display: inline-block;
-	border: 1px solid red;
-	width: 52px;
-	height: 52px;
+.winner-container {
+	padding: 8px 0;
+}
+
+.ttt-row {
+	display: flex;
+
+	.ttt-cell:last-of-type {
+		border-right: 0px;
+	}
+
+	&:last-of-type {
+		.ttt-cell {
+			border-bottom: 0px;
+		}
+	}
 }

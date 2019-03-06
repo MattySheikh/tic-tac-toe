@@ -4,7 +4,36 @@
 	padding: 8px;
 }
 
-header {
-	text-align: center;
-	font-size: 2em;
+.sean {
+	width: $default-marker-size;
+	height: $default-marker-size;
+}
+
+.square {
+	border: 1px solid black;
+	width: $default-marker-size;
+
+	&:after {
+		content: "";
+		display: block;
+		padding-bottom: 100%;
+	}
+}
+
+button {
+	border-radius: 3px;
+	background: white;
+	outline: none;
+
+	&:active {
+		border: 1px solid grey;
+	}
+}
+
+input[type="checkbox"] {
+	margin-right: 4px;
+}
+
+input[type="number"] {
+	width: 24px;
 }

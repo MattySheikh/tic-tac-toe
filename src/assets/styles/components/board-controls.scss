@@ -1,0 +1,9 @@
+.controls-container {
+	height: 52px;
+	display: flex;
+
+	& > div {
+		display: flex;
+		margin: 8px;
+	}
+}

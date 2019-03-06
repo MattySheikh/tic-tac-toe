@@ -1,10 +1,15 @@
 import { createAction } from 'redux-actions';
 
 const makeMove = createAction<{x: number, y: number }>('makeMove');
-const undoMove = createAction('undoMove');
-const redoMove = createAction('redoMove');
+const undoRedoMove = createAction<boolean>('undoRedoMove');
+const reset = createAction('reset');
+const toggleAltIcons = createAction('toggleAltIcons');
+const changeBoardSize = createAction('changeBoardSize');
+
 export const actions = {
 	makeMove,
-	undoMove,
-	redoMove
+	undoRedoMove,
+	reset,
+	toggleAltIcons,
+	changeBoardSize
 };

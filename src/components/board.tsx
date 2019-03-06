@@ -1,31 +1,45 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Action } from 'redux-actions';
 
+import { BoardControls } from '@components/board-controls';
 import { Cell, CellProps } from '@components/cell';
 import { actions } from '@src/actions';
-import { getMove } from '@src/util';
+import { getMarkerIcon } from '@src/util';
 
 import '@styles/components/board.scss';
 
 interface BoardProps {
-	currentMove: number;
-	boardSize: number;
+	altIcons: boolean;
 	boardMap: BoardMap;
+	boardSize: number;
+	currentMove: number;
+	winner: MoveType;
 	makeMove: (x: number, y: number) => void;
-	undoMove: () => void;
-	redoMove: () => void;
 }
 
-export class BoardComponent extends React.Component<BoardProps> {
+class BoardComponent extends React.Component<BoardProps> {
 	public render() {
 		return(<div>
-			Current move: {this.props.currentMove}, ({getMove(this.props.currentMove)}'s turn)
+			<BoardControls />
+			{<div className="flex-center winner-container">{this.getWinner()}</div>}
 			{this.getBoard()}
-			<button onClick={this.props.undoMove}>Undo</button>
-			<button onClick={this.props.redoMove}>Redo</button>
 		</div>);
+	}
+
+	private getWinner = () => {
+		if (this.props.winner) {
+			return(
+				<React.Fragment>
+					{getMarkerIcon(this.props.winner, this.props.altIcons)}
+					<span style={{ padding: '0 8px' }}>won!</span>
+				</React.Fragment>
+			);
+		}
+
+		if (this.props.currentMove === Math.pow(this.props.boardSize, 2)) {
+			return(<React.Fragment>Cat's game!</React.Fragment>);
+		}
 	}
 
 	private getBoard = () => {
@@ -38,7 +52,9 @@ export class BoardComponent extends React.Component<BoardProps> {
 					x,
 					y,
 					boardMap: this.props.boardMap,
-					makeMove: () => this.props.makeMove(x, y)
+					boardSize: this.props.boardSize,
+					makeMove: () => this.props.makeMove(x, y),
+					useAltIcons: this.props.altIcons,
 				};
 
 				cells.push(<Cell {...props} />);
@@ -51,24 +67,24 @@ export class BoardComponent extends React.Component<BoardProps> {
 			);
 		}
 
-		return boardRows;
+		return(
+			<div className="board">
+				{...boardRows}
+			</div>
+		);
 	}
 }
 
-const mapDispatchToProps = (dispatch: Dispatch<Action<any>>) => {
-	return {
-		makeMove: (x: number, y: number) => dispatch(actions.makeMove({ x, y })),
-		undoMove: () => dispatch(actions.undoMove()),
-		redoMove: () => dispatch(actions.redoMove())
-	};
-};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+	makeMove: (x: number, y: number) => dispatch(actions.makeMove({ x, y })),
+});
 
-const mapStateToProps = (state: BoardState) => {
-	return {
-		currentMove: state.currentMove,
-		boardSize: state.boardSize,
-		boardMap: state.boardMap
-	};
-};
+const mapStateToProps = (state: BoardState) => ({
+	currentMove: state.currentMove,
+	boardSize: state.boardSize,
+	boardMap: state.boardMap,
+	winner: state.winner,
+	altIcons: state.altIcons
+});
 
 export const Board = connect(mapStateToProps, mapDispatchToProps)(BoardComponent);
