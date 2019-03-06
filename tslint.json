@@ -1,0 +1,27 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "align": [true, "statements", "members", "elements"],
+        "dot-notation": [2, {"allowKeywords": true, "allowPattern": ""}],
+        "eofline": true,
+        "indent": [true, "tabs", 4],
+        "interface-name": [true, "never-prefix"],
+        "jsx-no-lambda": [false],
+        "no-default-export": true,
+        "no-parameter-reassignment": true,
+        "no-var-keyword": true,
+        // Please keep this. We don't want tsconfig to fail builds and want to catch it in the linter instead
+        "no-unused-variable": true,
+        "object-literal-sort-keys": [false],
+        "quotemark": [true, "single", "jsx-double"],
+        "trailing-comma": [false],
+        "max-line-length": {
+            "options": { "limit": 200 }
+        }
+    },
+    "rulesDirectory": []
+}

@@ -1,0 +1,12 @@
+$cell-height: 52px;
+
+.ttt-row {
+	display: block;
+}
+
+.ttt-cell {
+	display: inline-block;
+	border: 1px solid red;
+	width: 52px;
+	height: 52px;
+}
