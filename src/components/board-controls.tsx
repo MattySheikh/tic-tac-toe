@@ -28,8 +28,8 @@ class BoardControlsComponent extends React.Component<BoardControlProps> {
 		return(
 			<div className="controls-container flex-center">
 				<div>{icon}'s turn</div>
-				<div><button disabled={this.props.history.future.length === 0} onClick={() => this.props.undoRedoMove()}>Undo</button></div>
-				<div><button disabled={this.props.history.past.length === 0} onClick={() => this.props.undoRedoMove(true)}>Redo</button></div>
+				<div><button disabled={this.props.history.past.length === 0} onClick={() => this.props.undoRedoMove()}>Undo</button></div>
+				<div><button disabled={this.props.history.future.length === 0} onClick={() => this.props.undoRedoMove(true)}>Redo</button></div>
 				<div><button onClick={this.props.reset}>Reset</button></div>
 				<div>
 					<label>

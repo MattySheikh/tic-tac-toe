@@ -117,7 +117,7 @@ export const reducer = handleActions({
 				}
 			},
 			history: {
-				...state.history,
+				future: [],
 				past: [move, ...state.history.past]
 			},
 			winner
