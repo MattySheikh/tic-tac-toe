@@ -10,6 +10,17 @@ const composeSetup = typeof window === 'object' &&
 	(window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
 	(window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
 
+/**
+ * In order to identify if there has been a winner, we are keeping track of the points scored. This
+ * allows us to find a winner in O(n) time and not much additional space
+ *
+ * @param {Points} points - a cumulative score for diagonals + rows + columns
+ * @param {Move} move - the most recent move
+ * @param {number} boardSize
+ * @param {boolean} revert - whether or not to remove points (done in an undo)
+ *
+ * @returns {Points}
+ */
 const getPoints = (points: Points, move: Move, boardSize: number, revert = false): Points => {
 	const { x, y, type } = move;
 
@@ -38,6 +49,16 @@ const getPoints = (points: Points, move: Move, boardSize: number, revert = false
 	return newPoints;
 };
 
+/**
+ * Identifies a winner based on the current move and the size of the board as well as the points
+ *
+ * @param {Points} points - a cumulative score for diagonals + rows + columns
+ * @param {Move} move - the most recent move
+ * @param {number} currentMove
+ * @param {number} boardSize
+ *
+ * @returns {undefined | MoveMarker}
+ */
 const getWinner = (points: Points, move: Move, currentMove: number, boardSize: number) => {
 	const maxValue = Math.max(
 		Math.abs(points.rows[move.y]),

@@ -1,3 +1,7 @@
+/**
+ * This component handles the controls at the top of the screen and propagates the changes to the Redux store
+ */
+
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -11,6 +15,7 @@ interface BoardControlProps {
 	altIcons: boolean;
 	boardSize: number;
 	currentMove: number;
+	history: MoveHistory;
 	changeBoardSize: (size: number) => void;
 	reset: () => void;
 	toggleAltIcons: () => void;
@@ -18,14 +23,13 @@ interface BoardControlProps {
 }
 
 class BoardControlsComponent extends React.Component<BoardControlProps> {
-
 	public render() {
 		const icon = getMarkerIcon(getMove(this.props.currentMove), this.props.altIcons);
 		return(
 			<div className="controls-container flex-center">
 				<div>{icon}'s turn</div>
-				<div><button onClick={() => this.props.undoRedoMove()}>Undo</button></div>
-				<div><button onClick={() => this.props.undoRedoMove(true)}>Redo</button></div>
+				<div><button disabled={this.props.history.future.length === 0} onClick={() => this.props.undoRedoMove()}>Undo</button></div>
+				<div><button disabled={this.props.history.past.length === 0} onClick={() => this.props.undoRedoMove(true)}>Redo</button></div>
 				<div><button onClick={this.props.reset}>Reset</button></div>
 				<div>
 					<label>
@@ -42,8 +46,7 @@ class BoardControlsComponent extends React.Component<BoardControlProps> {
 	}
 
 	private changeBoardSize = (e: React.FormEvent<HTMLInputElement>) => {
-		const nextSize = +e.currentTarget.value;
-		this.props.changeBoardSize(nextSize);
+		this.props.changeBoardSize(+e.currentTarget.value);
 	}
 
 }
@@ -58,7 +61,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 const mapStateToProps = (state: BoardState) => ({
 	altIcons: state.altIcons,
 	boardSize: state.boardSize,
-	currentMove: state.currentMove
+	currentMove: state.currentMove,
+	history: state.history
 });
 
 export const BoardControls = connect(mapStateToProps, mapDispatchToProps)(BoardControlsComponent);

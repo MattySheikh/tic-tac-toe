@@ -4,13 +4,15 @@ interface BoardState {
 	currentMove: number;
 	boardSize: number;
 	boardMap: BoardMap;
-	history: {
-		past: Move[];
-		future: Move[];
-	},
+	history: MoveHistory,
 	points: Points;
 	winner?: MoveType;
 	altIcons?: boolean;
+}
+
+interface MoveHistory {
+	past: Move[];
+	future: Move[];
 }
 
 interface Move {

@@ -10,10 +10,25 @@ export const MARKER_POINTS = {
 	[MoveMarker.O]: -1,
 };
 
-export const getMove = (moveNumber: number) => {
+/**
+ * Gets the marker of whose turn it is
+ *
+ * @param {number} moveNumber
+ *
+ * @returns {MoveMarker}
+ */
+export const getMove = (moveNumber: number): MoveMarker => {
 	return moveNumber % 2 === 0 ? MoveMarker.X : MoveMarker.O;
 };
 
+/**
+ * Gets the marker icon given what type of move it is
+ *
+ * @param {MoveType} mark
+ * @param {boolean} useAltIcons
+ *
+ * @returns {JSX.Element | string}
+ */
 export const getMarkerIcon = (mark: MoveType, useAltIcons = false): JSX.Element | string => {
 	if (useAltIcons) {
 		return MoveMarker[mark] === MoveMarker.X ?

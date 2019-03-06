@@ -1,3 +1,8 @@
+/**
+ * This is the main entrypoint for the board. It houses both the board and the board controls. It also
+ * determines whether or not there has been a winner and prints it to the screen
+ */
+
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -27,7 +32,7 @@ class BoardComponent extends React.Component<BoardProps> {
 		</div>);
 	}
 
-	private getWinner = () => {
+	private getWinner = (): JSX.Element => {
 		if (this.props.winner) {
 			return(
 				<React.Fragment>
@@ -42,7 +47,7 @@ class BoardComponent extends React.Component<BoardProps> {
 		}
 	}
 
-	private getBoard = () => {
+	private getBoard = (): JSX.Element => {
 		const boardRows: JSX.Element[] = [];
 
 		for (let y = 0; y < this.props.boardSize; y++) {
@@ -57,11 +62,11 @@ class BoardComponent extends React.Component<BoardProps> {
 					useAltIcons: this.props.altIcons,
 				};
 
-				cells.push(<Cell {...props} />);
+				cells.push(<Cell key={`cell-${x}-${y}`} {...props} />);
 			}
 
 			boardRows.push(
-				<div className="ttt-row">
+				<div key={`row-${y}`} className="ttt-row">
 					{...cells}
 				</div>
 			);

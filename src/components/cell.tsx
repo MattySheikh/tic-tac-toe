@@ -1,3 +1,8 @@
+/**
+ * Controls the actual tic-tac-toe cells. I decided to break it out in order for this component to be
+ * purely presentational and not worry about the Redux store at all.
+ */
+
 import { noop } from 'lodash';
 import * as React from 'react';
 
@@ -39,6 +44,10 @@ export class Cell extends React.Component<CellProps> {
 		return mark ? getMarkerIcon(mark, this.props.useAltIcons) : '';
 	}
 
+	/**
+	 * Depending on whether or not the cell can move, this will call back to the parent component or
+	 * do nothing when clicked upon
+	 */
 	private getClickEvent = () => {
 		if (this.canMakeMove()) {
 			return () => this.props.makeMove(this.props.x, this.props.y);
@@ -47,7 +56,10 @@ export class Cell extends React.Component<CellProps> {
 		return noop;
 	}
 
-	private canMakeMove() {
+	/**
+	 * Determines whether or not the current cell can make a move based on the current board
+	 */
+	private canMakeMove(): boolean {
 		return !this.props.boardMap[this.props.y] || !this.props.boardMap[this.props.y][this.props.x];
 	}
 }

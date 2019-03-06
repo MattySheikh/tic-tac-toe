@@ -40,7 +40,6 @@
   },
   "scripts": {
     "watch": "webpack-dev-server --config webpack.dev.js --hot --inline --colors --mode development --open",
-    "build": "webpack --profile --progress --display-error-details --color --config webpack.prod.js",
     "lint": "tslint -p tsconfig.json --exclude '**/node_modules/**' --exclude '/node_modules/**/*' --exclude node_modules"
   },
   "dependencies": {}
